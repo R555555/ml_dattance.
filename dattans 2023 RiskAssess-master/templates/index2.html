@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ML API</title>
+  <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'Lato', sans-serif;
+      overflow-x: hidden;
+    }
+
+    @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600&display=swap');
+
+    :root {
+      --dark-color: hsl(0, 0%, 0%);
+      --gray-color: hsl(0, 0%, 60%);
+      --light-color: hsl(0, 0%, 100%);
+      --border-color-dark: hsl(10, 95%, 70%);
+      --border-color-normal: hsl(10, 95%, 83%);
+      --border-color-light: hsl(10, 95%, 93%);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Montserrat", sans-serif;
+      line-height: 1;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: whitesmoke;
+    }
+
+    a {
+      text-decoration: none;
+      transition: .25s;
+    }
+
+    button {
+      background: transparent;
+      border: none;
+      border-radius: 2em;
+      cursor: pointer;
+      font-size: .875em;
+      font-weight: 600;
+      height: 2em;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+      transition: .25s;
+    }
+
+    button:hover {
+      color: var(--gray-color);
+    }
+
+    header {
+      min-height: 10vh;
+    }
+
+    img {
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 80%;
+      width: 100%;
+    }
+
+    p {
+      color: var(--gray-color);
+      font-size: .875em;
+      hyphens: auto;
+      line-height: 1.5;
+      margin: 1em 0;
+    }
+
+    .container {
+      padding: 1em;
+    }
+
+    .flex-container {
+      display: flex;
+    }
+
+    .logo-link {
+      color: var(--dark-color);
+      font-weight: 600;
+      letter-spacing: .125em;
+      text-transform: uppercase;
+    }
+
+    .header-nav {
+      align-items: center;
+      flex-direction: column;
+      /*background: var( --border-color-light);*/
+    }
+
+    .header-menu {
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: .75em 0;
+    }
+
+    .header-menu-link {
+      color: var(--gray-color);
+      display: block;
+      font-size: .75em;
+      font-weight: 500;
+      padding: .5em .75em;
+      text-transform: uppercase;
+    }
+
+    .header-menu-link:hover {
+      color: var(--dark-color);
+      text-decoration: underline;
+      font-size: 1.5rem;
+    }
+
+    .ghost-button {
+      /*border: .125em solid var(--gray-color);*/
+      min-width: 9em;
+      padding: 0 1em;
+      height: 3rem;
+    }
+
+    .ghost-button:hover {
+      background: var(--gray-color);
+      color: var(--light-color);
+    }
+
+    .hh {
+      width: 25rem;
+      height: 25rem;
+      margin: auto;
+      margin-top: 5rem;
+      border-radius: 50%;
+    }
+
+    .hh:hover {
+      background: var(--gray-color);
+      color: var(--light-color);
+    }
+
+    /* HEADER CONTENT */
+
+
+    @media only screen and (min-width: 1024px) {
+      header {
+        overflow: hidden;
+      }
+
+      img {
+        object-position: 50% 100%;
+      }
+
+      .container {
+        padding: 2em;
+      }
+
+      .header-nav {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .header-menu-link {
+        padding: 0 1.5em;
+      }
+
+      .ghost-button {
+        font-size: .75em;
+      }
+
+      .header-content {
+        position: relative;
+      }
+
+      .header-img {
+        box-shadow: 0 0 0 2em var(--border-color-dark),
+          0 0 0 4em var(--border-color-normal),
+          0 0 0 6em var(--border-color-light);
+        height: 55vw;
+        margin: 0;
+        position: absolute;
+        right: -16vw;
+        top: 0vw;
+        width: 55vw;
+      }
+
+      .header-description {
+        margin: 6em 3em 0;
+        max-width: 50vw;
+      }
+
+      .header-title {
+        font-size: calc(1vw + 2.5em);
+      }
+    }
+
+    @media only screen and (orientation: portrait) and (min-height: 1024px) {
+      .header-content {
+        margin-top: 15vh;
+      }
+    }
+
+
+    /* -------------------------------------------------------------------------- */
+
+    /* CSS code for button */
+    /*  body {
+      background-image: url('static/images/world.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+ */
+    form {
+      width: 90%;
+      height: 80vh;
+      display: block;
+      margin: 0 auto;
+      margin-top: 2rem;
+      padding: 2rem;
+      /*       border: solid black 1px; */
+      box-shadow: 2px 10px 20px #ffffff, -2px -10px 20px #ffffff;
+
+    }
+
+    .f_hading {
+      margin-top: 4rem;
+      text-align: center;
+      font-family: sans-serif;
+      font-weight: 400;
+      color: gray;
+    }
+
+    form input {
+      margin: 1rem;
+      height: 2rem;
+      width: 11rem;
+      border: none;
+      border-radius: 10px;
+
+    }
+
+    /* CSS code for button */
+    .button_css {
+      color: #494949 !important;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: #ffffff;
+      padding: 15px;
+      margin-top: 2rem;
+      /*     border: 1px solid #494949 !important; */
+      border-radius: 50px;
+      display: inline-block;
+      transition: all 0.4s ease 0s;
+    }
+
+    .button_css:hover {
+      color: #ffffff !important;
+      background: lightgrey;
+      /*     border-color: #f6b93b !important; */
+      transition: all 0.4s ease 0s;
+    }
+
+
+
+
+
+
+    /* ------------------------------------------------------------------------------ */
+    .img-i {
+      width: 100%;
+      min-height: 60vh;
+      background-image: url("https://img.freepik.com/premium-photo/closeup-cancer-cell-different-bacteria-view-microscope-various-virus-attack-shell-tumor_124507-11142.jpg");
+      background-attachment: fixed
+        /*   background-image: url("images/Indian AI Hospital.png"); */
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      padding: 20px;
+
+    }
+
+
+
+
+
+
+
+    /* --------------------------------------------- */
+    #about-us {
+      margin: 8rem 0px;
+      padding: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    #about-us .about-item {
+      width: 30%;
+      text-align: center;
+      margin-right: 20px;
+    }
+
+    #about-us .about-item h2 {
+      font-style: italic;
+      font-weight: 900;
+      font-size: 1.4em;
+    }
+
+    #about-us .about-item i {
+      font-size: 2.5em;
+      border: 3px solid rgb(205, 127, 50);
+      border-radius: 100%;
+      padding: 30px;
+      color: rgb(205, 127, 50);
+      width: 106px;
+    }
+
+    /* ------------------------ */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    footer {
+      /*   position: fixed; */
+      background: #121c2c;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
+
+    footer::before {
+      content: '';
+      /*   position: absolute; */
+      left: 0;
+      top: 100px;
+      height: 1px;
+      width: 100%;
+      background: #121c2c;
+    }
+
+    footer .content {
+      max-width: 1350px;
+      margin: auto;
+      padding: 30px 40px 40px 40px;
+    }
+
+    footer .content .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 50px;
+    }
+
+    .content .top .logo-details {
+      color: #fff;
+      font-size: 30px;
+    }
+
+    .logo-details img {
+      vertical-align: middle;
+      cursor: pointer;
+    }
+
+    .logo_name {
+      vertical-align: bottom;
+      color: #aa336a;
+      opacity: .5;
+    }
+
+    .content .top .media-icons {
+      display: flex;
+    }
+
+    .content .top .media-icons a {
+      height: 40px;
+      width: 40px;
+      margin: 0 8px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      color: #fff;
+      font-size: 17px;
+      text-decoration: none;
+      transition: all 0.4s ease;
+    }
+
+    .top .media-icons a:nth-child(1) {
+      background: #4267B2;
+    }
+
+    .top .media-icons a:nth-child(1):hover {
+      color: #4267B2;
+      background: #fff;
+    }
+
+    .top .media-icons a:nth-child(2) {
+      background: #1DA1F2;
+    }
+
+    .top .media-icons a:nth-child(2):hover {
+      color: #1DA1F2;
+      background: #fff;
+    }
+
+    .top .media-icons a:nth-child(3) {
+      background: #E1306C;
+    }
+
+    .top .media-icons a:nth-child(3):hover {
+      color: #E1306C;
+      background: #fff;
+    }
+
+    .top .media-icons a:nth-child(4) {
+      background: #0077B5;
+    }
+
+    .top .media-icons a:nth-child(4):hover {
+      color: #0077B5;
+      background: #fff;
+    }
+
+    .top .media-icons a:nth-child(5) {
+      background: #FF0000;
+    }
+
+    .top .media-icons a:nth-child(5):hover {
+      color: #FF0000;
+      background: #fff;
+    }
+
+    footer .content .link-boxes {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    footer .content .link-boxes .box {
+      width: calc(100% / 5 - 10px);
+    }
+
+    .content .link-boxes .box .link_name {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 400;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .link-boxes .box .link_name::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      height: 2px;
+      width: 35px;
+      background: #fff;
+    }
+
+    .content .link-boxes .box li {
+      margin: 6px 0;
+      list-style: none;
+    }
+
+    .content .link-boxes .box li a {
+      color: #fff;
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: all 0.4s ease
+    }
+
+    .content .link-boxes .box li a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .content .link-boxes .input-box {
+      margin-right: 55px;
+    }
+
+    .link-boxes .input-box input {
+      height: 40px;
+      width: calc(100% + 55px);
+      outline: none;
+      border: 2px solid #AFAFB6;
+      background: #140B5C;
+      border-radius: 4px;
+      padding: 0 15px;
+      font-size: 15px;
+      color: #fff;
+      margin-top: 5px;
+    }
+
+    .link-boxes .input-box input::placeholder {
+      color: #AFAFB6;
+      font-size: 16px;
+    }
+
+    .link-boxes .input-box input[type="button"] {
+      background: #fff;
+      color: #140B5C;
+      border: none;
+      font-size: 18px;
+      font-weight: 500;
+      margin: 4px 0;
+      opacity: 0.8;
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+
+    .input-box input[type="button"]:hover {
+      opacity: 1;
+    }
+
+    footer .bottom-details {
+      width: 100%;
+      background: #0F0844;
+    }
+
+    footer .bottom-details .bottom_text {
+      max-width: 1250px;
+      margin: auto;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .bottom-details .bottom_text span,
+    .bottom-details .bottom_text a {
+      font-size: 14px;
+      font-weight: 300;
+      color: #fff;
+      opacity: 0.8;
+      text-decoration: none;
+    }
+
+    .bottom-details .bottom_text a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .bottom-details .bottom_text a {
+      margin-right: 10px;
+    }
+
+    @media (max-width: 900px) {
+      footer .content .link-boxes {
+        flex-wrap: wrap;
+      }
+
+      footer .content .link-boxes .input-box {
+        width: 40%;
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      footer {
+        position: relative;
+      }
+
+      .content .top .logo-details {
+        font-size: 26px;
+      }
+
+      .content .top .media-icons a {
+        height: 35px;
+        width: 35px;
+        font-size: 14px;
+        line-height: 35px;
+      }
+
+      footer .content .link-boxes .box {
+        width: calc(100% / 3 - 10px);
+      }
+
+      footer .content .link-boxes .input-box {
+        width: 60%;
+      }
+
+      .bottom-details .bottom_text span,
+      .bottom-details .bottom_text a {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      footer::before {
+        top: 145px;
+      }
+
+      footer .content .top {
+        flex-direction: column;
+      }
+
+      .content .top .media-icons {
+        margin-top: 16px;
+      }
+
+      footer .content .link-boxes .box {
+        width: calc(100% / 2 - 10px);
+      }
+
+      footer .content .link-boxes .input-box {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="header-nav container flex-container">
+      <h1 class="logo"><a class="logo-link" href="#">SK Creator</a></h1>
+      <ul class="header-menu flex-container">
+        <li><a class="header-menu-link" href="#">home</a></li>
+
+        <li><a class="header-menu-link" href="#">Ditection</a></li>
+        <li><a class="header-menu-link" href="#">About</a></li>
+        <li><a class="header-menu-link" href="#">help</a></li>
+        <li><a class="header-menu-link" href="#">Blog</a></li>
+      </ul>
+      <button class="ghost-button">submit</button>
+    </nav>
+  </header>
+  <div class="img-i"></div>
+  <!-- -------------------------------------------------------- -->
+
+  <h1 class="f_hading">Enter the value of tumor features.</h1>
+  <form action="{{ url_for('predict')}}" method="post">
+
+
+    <input type="text" name="mean_radius" placeholder="  mean radius" required="required" />
+    <input type="text" name="mean_texture" placeholder="  mean texture" required="required" />
+    <input type="text" name="mean_perimeter" placeholder="  mean perimeter" required="required" />
+    <input type="text" name="mean_area" placeholder="  mean area" required="required" />
+    <input type="text" name="mean_smoothness" placeholder="  mean smoothness" required="required" />
+    <input type="text" name="mean_compactness" placeholder="  mean compactness" required="required" />
+    <br>
+    <input type="text" name="mean_concavity" placeholder="  mean concavity" required="required" />
+    <input type="text" name="mean_concave_points" placeholder="  mean concave points" required="required" />
+    <input type="text" name="mean_symmetry" placeholder="  mean symmetry" required="required" />
+    <input type="text" name="mean_fractal_dimension" placeholder="  mean fractal dimension" required="required" />
+    <input type="text" name="radius_error" placeholder="  radius error" required="required" />
+    <input type="text" name="texture_error" placeholder="  texture error" required="required" />
+    <br>
+    <input type="text" name="perimeter_error" placeholder="  perimeter error" required="required" />
+    <input type="text" name="area_error" placeholder="  area error " required="required" />
+    <input type="text" name="smoothness_error" placeholder="  smoothness error" required="required" />
+    <input type="text" name="compactness_error" placeholder="  compactness error" required="required" />
+    <input type="text" name="concavity_error" placeholder="  concavity error" required="required" />
+    <input type="text" name="concave_points_error" placeholder="  concave points error" required="required" />
+    <br>
+    <input type="text" name="symmetry_error" placeholder="  symmetry error" required="required" />
+    <input type="text" name="fractal_dimension_error" placeholder="  fractal dimension error" required="required" />
+    <input type="text" name="worst_radius" placeholder="  worst radius" required="required" />
+    <input type="text" name="worst_texture" placeholder="  worst texture" required="required" />
+    <input type="text" name="worst_perimeter" placeholder="  worst perimeter" required="required" />
+    <input type="text" name="worst_area" placeholder="  worst area" required="required" />
+    <br>
+    <input type="text" name="worst_smoothness" placeholder="  worst smoothness" required="required" />
+    <input type="text" name="worst_compactness" placeholder="  worst compactness" required="required" />
+    <input type="text" name="worst_concavity" placeholder="  worst concavity" required="required" />
+    <input type="text" name="worst_concave_points" placeholder="  worst concave points" required="required" />
+    <input type="text" name="worst_symmetry" placeholder=" '  worst symmetry" required="required" />
+    <input type="text" name="worst_fractal_dimension" placeholder="  worst fractal dimension" required="required" />
+    <br>
+    <br>
+
+    <!-- Show button -->
+    <div class="button_cont" align="center"><a class="button_css" href="" target="_blank" rel="nofollow noopener">
+        <button type="submit" class="btn btn-primary btn-block btn-large"><strong>Predict Cancer</strong></button></a>
+    </div>
+
+    <!-- Show predicted output using ML model -->
+    <div>
+      <center>
+        <h1 class="f_hading">[ prediction_Result ]</h1>
+      </center>
+    </div>
+
+    </div>
+
+  </form>
+
+  <!-- ========================================= -->
+  <section id="about-us">
+    <section class="about-item">
+      <i class="fas fa-pencil-alt"></i>
+      <h1>Consectetur Risus</h1>
+      <p>
+        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
+        Nullam id dolor id nibh ultricies vehicula ut id elit.
+      </p>
+    </section>
+    <section class="about-item">
+      <i class="fas fa-camera-retro"></i>
+      <h1>Consectetur Risus</h1>
+      <p>
+        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
+        Nullam id dolor id nibh ultricies vehicula ut id elit.
+      </p>
+    </section>
+    <section class="about-item">
+      <i class="fas fa-dollar-sign"></i>
+      <h1>Consectetur Risus</h1>
+      <p>
+        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
+        Nullam id dolor id nibh ultricies vehicula ut id elit.
+      </p>
+    </section>
+  </section>
+
+  <!-- ======================================================= -->
+  <footer>
+    <div class="content">
+      <div class="top">
+        <div class="logo-details">
+          <a href="#">
+            <!-- <img src="assets/img/Utech logo.png" width="65"> -->
+          </a>
+          <span class="logo_name">Sk studio</span>
+        </div>
+        <div class="media-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="link-boxes">
+        <ul class="box">
+          <li class="link_name">Company</li>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Contact us</a></li>
+          <li><a href="#">About us</a></li>
+          <li><a href="#">Get started</a></li>
+        </ul>
+        <ul class="box">
+          <li class="link_name">Services</li>
+          <li><a href="#">ABC</a></li>
+          <li><a href="#">ABC</a></li>
+          <li><a href="#">ABC</a></li>
+          <li><a href="#">ABC</a></li>
+        </ul>
+        <ul class="box">
+          <li class="link_name">Account</li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">My account</a></li>
+          <li><a href="#">Prefrences</a></li>
+          <li><a href="#">Purchase</a></li>
+        </ul>
+        <ul class="box">
+          <li class="link_name">Hospitl</li>
+          <li><a href="#">AIIMS</a></li>
+          <li><a href="#">kims</a></li>
+          <li><a href="#">Distric Hospital</a></li>
+          <li><a href="#">Madical College</a></li>
+        </ul>
+        <ul class="box input-box">
+          <li class="link_name">Subscribe</li>
+          <li><input type="text" placeholder="Enter your email"></li>
+          <li><input type="button" value="Subscribe"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom-details">
+      <div class="bottom_text">
+        <span class="copyright_text">Copyright © 2023 <a href="#">SK Creator Studio </a>All rights reserved</span>
+        <span class="policy_terms">
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms & condition</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
